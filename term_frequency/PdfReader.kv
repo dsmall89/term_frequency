@@ -1,0 +1,128 @@
+#:kivy 1.9.1
+
+<PdfReaderMainScreen>:
+    textinputtext: txt.text
+    dirtext: doclist.text
+
+
+
+    GridLayout:
+        cols:1
+        size: root.width - 200, root.height -200
+        pos: 100, 100
+
+        GridLayout:
+            cols:2
+
+
+            TextInput:
+                id: doclist
+                multiline:True
+                text: root.dirtext
+                # pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                halign: 'left'
+                valign: 'middle'
+                markup: True
+                font_size: '20pt'
+
+
+            TextInput:
+                id: txt
+                multiline:True
+                text: root.textinputtext
+                # pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                halign: 'left'
+                valign: 'middle'
+                markup: True
+                font_size: '12pt'
+
+
+
+            # Label:
+            #     text:"KEY WORD"
+            #     markup: True
+            #     shorten: True
+            #     ellipsis_options: {'color':(1,0.5,0.5,1),'underline':True}
+
+
+
+        RelativeLayout:
+            size_hint: 0.2,0.2
+            size: 750, 100
+            orientation: 'horizontal'
+
+            BoxLayout:
+                size_hint_y: None
+                height: 50
+                orientation: 'horizontal'
+
+                Button:
+                    text: 'Load'
+                    on_release: root.show_load()
+                # Button:
+                #     id: OPEN_BTN
+                #     text: ' OPEN'
+                #     on_press: root.generate_doclist()
+                Button:
+                    id: GEN_BTN
+                    text: ' Generate Keywords '
+                    on_press: root.generate_KeyWord_Btn()
+                Button:
+                    id: PRE_BTN
+                    text: '<< Previous'
+                    on_press: root.previous_Btn()
+                Button:
+                    id: NXT_BTN
+                    text: 'Next >>'
+                    on_press: root.next_Btn()
+                    on_state: print(self.state)
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+
+        FileChooserListView:
+            id: filechooser
+            dirselect: True
+            path : "/Users/dontesmall/"
+            font_size: '12pt'
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load Directory"
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+
+<PdfReaderUI>:
+#Here we place all GUI elements on top of the white canvas by creating an AnchorLayout
+#then call PdfReaderMainScreen
+    AnchorLayout:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # white
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+        size: self.parent.size
+        anchor_x: 'center'
+        anchor_y: 'center'
+
+
+        PdfReaderMainScreen:
+            size: 400, 400
+
+<PdfReaderApp>:
+    FloatLayout:
+        PdfReaderUI:
+            center: 0.9, 0.9
