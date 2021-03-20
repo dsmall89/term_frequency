@@ -15,7 +15,7 @@ future==0.17.1
 idna==2.8
 ipaddress==1.0.22
 itsdangerous==1.1.0
-Jinja2==2.10.1
+Jinja2==2.11.3
 jinja2-time==0.2.0
 Kivy==1.11.1
 Kivy-examples==1.11.1
